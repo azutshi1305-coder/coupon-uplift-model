@@ -8,4 +8,5 @@ shap
 matplotlib
 seaborn
 jupyter
+tabulate
    git+https://github.com/bradleyboehmke/completejourney_py.git
