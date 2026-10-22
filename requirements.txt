@@ -1,0 +1,11 @@
+pandas
+numpy
+pyarrow
+scikit-learn
+lightgbm
+xgboost
+shap
+matplotlib
+seaborn
+jupyter
+   git+https://github.com/bradleyboehmke/completejourney_py.git
