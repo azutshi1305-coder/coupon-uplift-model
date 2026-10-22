@@ -6,6 +6,8 @@ mirror the targeting questions behind an Amex Business Analyst – Offers role.
 
 **Author:** Annapurna Zutshi
 
+📊 [**Insights deck**](reports/Coupon_Targeting_Propensity_Uplift_Deck.pdf) — slide summary of the business problem, approach, and key results.
+
 ## Business problem
 
 Retail and card-offer teams routinely decide who to target with a coupon or offer. Two
