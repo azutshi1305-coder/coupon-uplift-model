@@ -152,6 +152,9 @@ activemq-data/
 # Project data
 data/
 
+# Local project instructions (kept on this machine only, not in git history)
+CLAUDE.md
+
 # Environments
 .env
 .envrc
