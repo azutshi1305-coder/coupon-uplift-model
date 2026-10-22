@@ -57,25 +57,29 @@ every campaign and every modelling stage.
 
 ![Treated vs. control profile](reports/figures/02_treated_vs_control_profile.png)
 
-**The propensity model beats a naive heuristic at predicting redemption.** Calibrated
-XGBoost reaches ROC-AUC 0.844 / PR-AUC 0.629 vs. a "rank by past redemptions" baseline's
-0.780 / 0.526, capturing more actual redeemers at every contact rate.
+**The propensity model ties the naive heuristic early, then pulls ahead.** Calibrated
+XGBoost and a "rank by past redemptions" baseline tie on top-decile lift (3.72x, both)
+and capture almost the same share of redeemers through the top ~20% contacted (60.8% vs.
+57.9%). Beyond that XGBoost pulls away — 81.8% vs. 72.9% of redeemers captured at 40%
+contact — and wins outright on ROC-AUC (0.844 vs. 0.780) and PR-AUC (0.629 vs. 0.563).
 
 ![Propensity model cumulative gains](reports/figures/04_propensity_cumulative_gains.png)
 
-**Adjusting for selection bias cuts the estimated effect by more than half.** The naive
-treated-vs-control difference in "bought a couponed product" (12.2 points) drops to 5.9
-points under inverse-propensity weighting and to **2.7 points (95% CI 0.6–4.7) under a
-doubly-robust AIPW estimator** — still positive, but a much smaller, more defensible
-number than the naive comparison suggests.
+**Adjusting for selection bias cuts the estimated effect by ~78%.** The naive
+treated-vs-control difference in "bought a couponed product" (**+12.2 points**, 95% CI
+[9.8, 14.4]) drops to **+5.9 points** (CI [3.3, 8.5]) under inverse-propensity weighting
+and to **+2.7 points** (CI [0.6, 4.7]) under a doubly-robust AIPW estimator — the
+headline effect size for this project: still positive, but a much smaller, more
+defensible number than the naive comparison suggests.
 
 ![Naive vs IPW vs AIPW effect estimates](reports/figures/05_ate_estimates_binary.png)
 
 **A T-learner on a less-saturated dollar outcome finds real, validated heterogeneity.**
 Ranking households by predicted change in weekly coupon-category spend produces a Qini
-coefficient of **+532 — a result a 500-shuffle permutation test shows would occur by
-chance less than 1 time in 500 (p < 0.002)**. The same ranking on the original binary
-"did they buy anything" outcome *failed* to beat random, because that outcome is
+coefficient of **+532** — peaking at **16% of the population contacted, $1,474/week**
+cumulative incremental spend — **a result a 500-shuffle permutation test shows would
+occur by chance less than 1 time in 500 (p < 0.002)**. The same ranking on the original
+binary "did they buy anything" outcome *failed* to beat random, because that outcome is
 96-97% saturated for treated households — there's little heterogeneity left to detect.
 
 ![Uplift by decile and Qini curve](reports/figures/06_uplift_decile_and_qini.png)
