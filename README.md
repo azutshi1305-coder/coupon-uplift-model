@@ -42,8 +42,23 @@ file.
 | 5 | `05_uplift.ipynb` | Causal/uplift model — propensity-based overlap trimming, covariate balance (love plot), naive vs. IPW vs. doubly-robust (AIPW) effect estimates with bootstrap CIs, a T-learner evaluated with Qini curves and a permutation test |
 | 6 | `06_results_summary.ipynb` | Reloads every saved output (no models refit) and exports the figures and numbers below |
 
-See [CLAUDE.md](CLAUDE.md) for the full design rationale (campaign selection, train/test
-split, why a 16-week lookback, etc.).
+## Design decisions
+
+- **Out-of-time train/test split.** Models train on campaigns 8 and 13 and are evaluated
+  on campaign 18 only — the three "Type A" campaigns, each targeting ~1,100 households.
+  This mirrors how a targeting model would actually be validated in production: trained
+  on past campaigns, scored on the next one.
+- **Uplift outcome is spend/purchase, not redemption.** Redemption is undefined for
+  control households (they were never sent a coupon to redeem), so it can't be a causal
+  outcome. The uplift model instead targets whether — and how much — a household bought
+  the campaign's couponed products, which is observable for treated and control alike.
+- **No-leakage feature window.** Every feature is built from the 16 weeks *before* a
+  campaign's start date only. None of the behavioral, demographic, or campaign-exposure
+  features ever look at data from the campaign window itself.
+- **Overlap trimming before any causal estimate.** Households with an estimated
+  propensity to be targeted outside [0.05, 0.95] are excluded from the IPW/AIPW effect
+  estimates — comparing treated and control households only where both are actually
+  plausible, rather than extrapolating into regions with no real counterfactual data.
 
 ## Key results
 
@@ -121,7 +136,6 @@ rollout.
 
 ```
 coupon-uplift-model/
-├── CLAUDE.md                      # full project design & working notes
 ├── README.md                      # this file
 ├── requirements.txt
 ├── src/
